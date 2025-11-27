@@ -3,12 +3,6 @@ spring:
     name: j-notification-service
 
 
-flyway:
-    baseline-on-migrate: true
-    enabled: true
-    validate-on-migrate: true
-    baseline-version: 0
-    schemas: postgres
 
 server:
   port: 8085
