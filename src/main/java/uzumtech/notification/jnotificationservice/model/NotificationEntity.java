@@ -7,9 +7,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
 import uzumtech.notification.jnotificationservice.model.enums.Status;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
-@Entity(name = "merchants")
+@Entity(name = "notifications")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,19 +30,18 @@ public class NotificationEntity {
     private Status status;
 
     @Column(nullable = false)
-    private String text;
+    private String content;
 
     @Column(nullable = false)
     private String receiver;
 
     @CreationTimestamp
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private OffsetDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchant_id", updatable = false, foreignKey = @ForeignKey(name = "fk_merchant"))
     private MerchantEntity merchant;
-
 }
