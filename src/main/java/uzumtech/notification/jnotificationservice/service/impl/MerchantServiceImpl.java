@@ -3,6 +3,7 @@ package uzumtech.notification.jnotificationservice.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class MerchantServiceImpl implements MerchantService {
 
     MerchantRepository merchantRepository;
@@ -31,6 +33,10 @@ public class MerchantServiceImpl implements MerchantService {
         MerchantEntity merchant = merchantMapper.toEntity(request);
         merchant.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
         merchant = merchantRepository.save(merchant);
+
+        log.info("Merchant created | merchantId={} | companyName={}",
+                merchant.getId(),
+                merchant.getCompanyName());
 
         return merchantMapper.toResponse(merchant);
     }

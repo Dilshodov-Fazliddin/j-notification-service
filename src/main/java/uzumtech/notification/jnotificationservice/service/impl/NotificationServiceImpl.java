@@ -1,8 +1,11 @@
 package uzumtech.notification.jnotificationservice.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import uzumtech.notification.jnotificationservice.service.NotificationService;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
     NotificationRepository notificationRepository;
@@ -27,6 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
+    @Transactional
     public NotificationResponse sendEmail(NotificationEmailRequest notificationEmailRequest, Long merchantId) {
 
         MerchantEntity merchantEntity = merchantRepository
@@ -36,11 +41,17 @@ public class NotificationServiceImpl implements NotificationService {
                 .toEmailNotification(notificationEmailRequest, merchantEntity);
 
         notificationRepository.save(emailNotification);
+        log.info("EMAIL notification sent | merchantId={} | phoneNumber={} | message='{}' | notificationId={}",
+                merchantId,
+                notificationEmailRequest.getEmail(),
+                notificationEmailRequest.getContent(),
+                emailNotification.getId());
 
         return notificationMapper.toResponse(emailNotification);
     }
 
     @Override
+    @Transactional
     public NotificationResponse sendSms(NotificationSmsRequest smsRequest, Long merchantId) {
         MerchantEntity merchantEntity = merchantRepository
                 .findById(merchantId).orElseThrow(() -> new UsernameNotFoundException("Merchant not found " + merchantId));
@@ -49,6 +60,13 @@ public class NotificationServiceImpl implements NotificationService {
                 .toSmsNotification(smsRequest, merchantEntity);
 
         notificationRepository.save(smsNotification);
+
+        log.info("SMS notification sent | merchantId={} | phoneNumber={} | message='{}' | notificationId={}",
+                merchantId,
+                smsRequest.getReceiver(),
+                smsRequest.getContent(),
+                smsNotification.getId());
+
         return notificationMapper.toResponse(smsNotification);
     }
 }

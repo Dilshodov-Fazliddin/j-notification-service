@@ -13,9 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationSmsRequest {
+
     @NotBlank(message = "content is empty")
     @Size(max = 300)
     private String content;
+
+    @Pattern(regexp = "^998\\d{9}$")
     @NotBlank(message = "receiver is empty")
     private String receiver;
 }
