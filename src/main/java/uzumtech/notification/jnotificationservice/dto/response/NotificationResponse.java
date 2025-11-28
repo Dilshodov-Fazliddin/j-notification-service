@@ -15,4 +15,7 @@ public class NotificationResponse {
     private String type;
     private String status;
     private String createdAt;
+
+    public NotificationResponse( String emailSent ) {
+    }
 }

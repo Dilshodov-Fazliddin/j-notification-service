@@ -23,8 +23,8 @@ public class NotificationController {
     NotificationService notificationService;
 
     @PostMapping("/registration")
-    public MerchantResponse registration(@Valid @RequestBody MerchantRequest merchantRequest) {
-        return merchantService.create(merchantRequest);
+    public MerchantResponse registration( @Valid @RequestBody MerchantRequest merchantRequest ) {
+        return merchantService.create( merchantRequest );
     }
 
     @PostMapping("/sms/{merchantId}")
@@ -32,8 +32,8 @@ public class NotificationController {
             @PathVariable Long merchantId,
             @Valid @RequestBody NotificationSmsRequest request
     ) {
-        NotificationResponse response = notificationService.sendSms(request, merchantId);
-        return ResponseEntity.ok(response);
+        NotificationResponse response = notificationService.sendSms( request, merchantId );
+        return ResponseEntity.ok( response );
     }
 
     @PostMapping("/email/{merchantId}")
@@ -41,7 +41,7 @@ public class NotificationController {
             @PathVariable Long merchantId,
             @Valid @RequestBody NotificationEmailRequest request
     ) {
-        NotificationResponse response = notificationService.sendEmail(request, merchantId);
-        return ResponseEntity.ok(response);
+        NotificationResponse response = notificationService.sendEmail( request, merchantId );
+        return ResponseEntity.ok( response );
     }
 }

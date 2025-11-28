@@ -44,4 +44,7 @@ public class NotificationEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchant_id", updatable = false, foreignKey = @ForeignKey(name = "fk_merchant"))
     private MerchantEntity merchant;
+
+    public NotificationEntity( Object o, String title1, String content1 ) {
+    }
 }

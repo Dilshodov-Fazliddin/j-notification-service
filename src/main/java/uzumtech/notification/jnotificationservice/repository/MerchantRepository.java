@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface MerchantRepository extends JpaRepository<MerchantEntity, Long> {
 
-    Optional<MerchantEntity> findByUsername(String username);
+    Optional<MerchantEntity> findByUsername( String username );
 
-    boolean existsByLogin(@NotBlank(message = "login is blank") String login);
+    boolean existsByLogin( @NotBlank(message = "login is blank") String login );
 
-    boolean existsByTaxNumber(@NotBlank(message = "tax number is blank") String taxNumber);
+    boolean existsByTaxNumber( @NotBlank(message = "tax number is blank") String taxNumber );
 }

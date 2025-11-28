@@ -12,4 +12,7 @@ public class MerchantResponse {
     private String taxNumber;
     private String login;
     private String webhook;
+
+    public MerchantResponse( long l, String testMerchant ) {
+    }
 }
