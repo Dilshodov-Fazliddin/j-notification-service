@@ -19,13 +19,8 @@ import uzumtech.notification.jnotificationservice.service.NotificationService;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationController {
-    MerchantService merchantService;
-    NotificationService notificationService;
 
-    @PostMapping("/registration")
-    public MerchantResponse registration(@Valid @RequestBody MerchantRequest merchantRequest) {
-        return merchantService.create(merchantRequest);
-    }
+    NotificationService notificationService;
 
     @PostMapping("/sms/{merchantId}")
     public ResponseEntity<NotificationResponse> sendSms(
