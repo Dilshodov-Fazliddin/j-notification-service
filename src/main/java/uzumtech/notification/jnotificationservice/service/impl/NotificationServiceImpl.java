@@ -3,6 +3,7 @@ package uzumtech.notification.jnotificationservice.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
@@ -17,13 +18,12 @@ import uzumtech.notification.jnotificationservice.service.NotificationService;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class NotificationServiceImpl implements NotificationService {
 
     NotificationRepository notificationRepository;
     MerchantRepository merchantRepository;
     NotificationMapper notificationMapper;
-    NotificationResponse notificationResponse;
 
 
     @Override

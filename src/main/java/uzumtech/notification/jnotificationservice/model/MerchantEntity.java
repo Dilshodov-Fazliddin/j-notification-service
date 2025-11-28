@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Entity(name = "merchants")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class MerchantEntity implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String companyName;
 
     @Column(nullable = false)
     private String webhook;

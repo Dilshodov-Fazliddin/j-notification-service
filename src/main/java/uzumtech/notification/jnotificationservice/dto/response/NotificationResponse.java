@@ -2,7 +2,8 @@ package uzumtech.notification.jnotificationservice.dto.response;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
