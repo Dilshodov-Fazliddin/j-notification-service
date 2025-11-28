@@ -11,7 +11,7 @@ public interface MerchantRepository extends JpaRepository<MerchantEntity, Long> 
 
     Optional<MerchantEntity> findByUsername(String username);
 
-    boolean existsByLogin(@NotBlank(message = "login is blank") String login);
+    boolean existsByLogin(String login);
 
-    boolean existsByTaxNumber(@NotBlank(message = "tax number is blank") String taxNumber);
+    boolean existsByTaxNumber(String taxNumber);
 }

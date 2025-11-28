@@ -3,6 +3,26 @@ spring:
     name: j-notification-service
 
 
+  datasource:
+    url: your-url
+    username: your-username
+    password: *
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
+        order_updates: true
+        order_inserts: true
+        format_sql: true
+        generate_statistics: true
 
 server:
   port: 8085

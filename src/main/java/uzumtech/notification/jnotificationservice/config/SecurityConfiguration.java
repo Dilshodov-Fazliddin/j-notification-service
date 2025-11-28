@@ -23,7 +23,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requestsConfigurer -> requestsConfigurer
                         .anyRequest()
-                        .permitAll()).build();
+                        .permitAll())
+                .build();
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
