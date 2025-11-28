@@ -10,7 +10,7 @@ import uzumtech.notification.jnotificationservice.model.enums.Status;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
-@Entity(name = "notifications")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor

@@ -17,6 +17,5 @@ public class NotificationSmsRequest {
     @Size(max = 300)
     private String content;
     @NotBlank(message = "receiver is empty")
-    @Pattern(regexp = "^+998\\d{7}$", message = "invalid number")
     private String receiver;
 }
