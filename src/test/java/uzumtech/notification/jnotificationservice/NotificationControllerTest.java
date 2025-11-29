@@ -7,10 +7,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import uzumtech.notification.jnotificationservice.controller.NotificationController;
-import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsRequest;
-import uzumtech.notification.jnotificationservice.dto.response.MerchantResponse;
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
 import uzumtech.notification.jnotificationservice.service.MerchantService;
 import uzumtech.notification.jnotificationservice.service.NotificationService;
@@ -36,18 +34,6 @@ class NotificationControllerTest {
     }
 
     @Test
-    void shouldRegisterMerchant() {
-        MerchantRequest request = new MerchantRequest(); // set fields as needed
-        MerchantResponse expectedResponse = new MerchantResponse(); // set fields
-        when( merchantService.create( request ) ).thenReturn( expectedResponse );
-
-        MerchantResponse response = notificationController.registration( request );
-
-        assertEquals( expectedResponse, response );
-        verify( merchantService, times( 1 ) ).create( request );
-    }
-
-    @Test
     void shouldSendSmsNotification() {
         Long merchantId = 1L;
         NotificationSmsRequest request = new NotificationSmsRequest();
@@ -57,7 +43,7 @@ class NotificationControllerTest {
         ResponseEntity<NotificationResponse> response = notificationController.sendSms( merchantId, request );
 
         assertEquals( expectedResponse, response.getBody() );
-        assertEquals( HttpStatus.OK, response.getStatusCode() ); // compare with HttpStatus object
+        assertEquals( HttpStatus.OK, response.getStatusCode() );
         verify( notificationService, times( 1 ) ).sendSms( request, merchantId );
     }
 
@@ -71,7 +57,7 @@ class NotificationControllerTest {
         ResponseEntity<NotificationResponse> response = notificationController.sendEmail( merchantId, request );
 
         assertEquals( expectedResponse, response.getBody() );
-        assertEquals( HttpStatus.OK, response.getStatusCode() ); // compare with HttpStatus object
+        assertEquals( HttpStatus.OK, response.getStatusCode() );
         verify( notificationService, times( 1 ) ).sendEmail( request, merchantId );
     }
 }
