@@ -1,15 +1,13 @@
-package uzumtech.notification.jnotificationservice;
+package uzumtech.notification.jnotificationservice.repository;
 
 import org.junit.jupiter.api.Test;
 import uzumtech.notification.jnotificationservice.model.MerchantEntity;
-import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-class MerchantRepositoryTest {
+class MerchantsRepositoryTest {
 
     private final MerchantRepository merchantRepository = mock( MerchantRepository.class );
 

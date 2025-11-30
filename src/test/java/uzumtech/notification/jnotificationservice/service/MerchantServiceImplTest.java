@@ -72,7 +72,6 @@ public class MerchantServiceImplTest {
 
     @Test
     void create_Success() {
-        // Given
         String encodedPassword = "encoded_password_from_generator";
 
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
@@ -82,10 +81,8 @@ public class MerchantServiceImplTest {
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
 
-        // When
         MerchantResponse result = merchantService.create(testRequest);
 
-        // Then
         assertNotNull(result);
         assertEquals(testResponse.getId(), result.getId());
         assertEquals(testResponse.getCompanyName(), result.getCompanyName());
@@ -103,10 +100,8 @@ public class MerchantServiceImplTest {
 
     @Test
     void create_DuplicateLogin_ThrowsException() {
-        // Given
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(true);
 
-        // When & Then
         RuntimeException exception = assertThrows(
             RuntimeException.class,
             () -> merchantService.create(testRequest)
@@ -122,11 +117,9 @@ public class MerchantServiceImplTest {
 
     @Test
     void create_DuplicateTaxNumber_ThrowsException() {
-        // Given
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
         when(merchantRepository.existsByTaxNumber(testRequest.getTaxNumber())).thenReturn(true);
 
-        // When & Then
         RuntimeException exception = assertThrows(
             RuntimeException.class,
             () -> merchantService.create(testRequest)
@@ -142,7 +135,6 @@ public class MerchantServiceImplTest {
 
     @Test
     void create_PasswordGenerationWorks() {
-        // Given
         String encodedPassword = "super_secure_encoded_password_from_generator";
 
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
@@ -152,10 +144,8 @@ public class MerchantServiceImplTest {
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
 
-        // When
         merchantService.create(testRequest);
 
-        // Then
         verify(passwordGenerator).generatePassword();
 
         ArgumentCaptor<String> passwordCaptor = ArgumentCaptor.forClass(String.class);
@@ -165,7 +155,6 @@ public class MerchantServiceImplTest {
         assertNotNull(capturedPassword);
         assertEquals(encodedPassword, capturedPassword);
 
-        // Verify that password was set on entity
         ArgumentCaptor<MerchantEntity> entityCaptor = ArgumentCaptor.forClass(MerchantEntity.class);
         verify(merchantRepository).save(entityCaptor.capture());
 
@@ -185,13 +174,10 @@ public class MerchantServiceImplTest {
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
 
-        // When
         MerchantResponse result = merchantService.create(testRequest);
 
-        // Then
         assertNotNull(result);
 
-        // Verify the order and interactions
         verify(merchantRepository).existsByLogin(testRequest.getLogin());
         verify(merchantRepository).existsByTaxNumber(testRequest.getTaxNumber());
         verify(passwordGenerator).generatePassword();
@@ -199,7 +185,6 @@ public class MerchantServiceImplTest {
         verify(merchantRepository).save(testEntity);
         verify(merchantMapper).toResponse(testEntity);
 
-        // Verify no extra interactions
         verifyNoMoreInteractions(merchantRepository, merchantMapper, passwordGenerator);
     }
 }
