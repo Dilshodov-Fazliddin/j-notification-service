@@ -1,4 +1,4 @@
-package uzumtech.notification.jnotificationservice;
+package uzumtech.notification.jnotificationservice.repository;
 
 import org.junit.jupiter.api.Test;
 import uzumtech.notification.jnotificationservice.model.NotificationEntity;
@@ -29,21 +29,21 @@ class NotificationRepositoryTest {
         NotificationRepository repo = mock( NotificationRepository.class );
         NotificationEntity notification = new NotificationEntity();
 
-        when( repo.findById( 1L ) ).thenReturn( Optional.of( notification ) );
+        when(repo.findById(1)).thenReturn( Optional.of( notification ) );
 
-        Optional<NotificationEntity> result = repo.findById( 1L );
+        Optional<NotificationEntity> result = repo.findById( 1 );
 
         assertTrue( result.isPresent() );
         assertEquals( notification, result.get() );
-        verify( repo, times( 1 ) ).findById( 1L );
+        verify( repo, times( 1 ) ).findById( 1 );
     }
 
     @Test
     void testDeleteById() {
         NotificationRepository repo = mock( NotificationRepository.class );
 
-        repo.deleteById( 1L );
+        repo.deleteById( 1 );
 
-        verify( repo, times( 1 ) ).deleteById( 1L );
+        verify( repo, times( 1 ) ).deleteById( 1 );
     }
 }

@@ -83,7 +83,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendEmail_Success() {
-        // Given
         Long merchantId = 1L;
         NotificationEmailRequest request = NotificationEmailRequest.builder()
                 .email("test@example.com")
@@ -95,10 +94,8 @@ public class NotificationServiceImplTest {
         when(notificationRepository.save(any(NotificationEntity.class))).thenReturn(testNotification);
         when(notificationMapper.toResponse(testNotification)).thenReturn(testResponse);
 
-        // When
         NotificationResponse result = notificationService.sendEmail(request, merchantId);
 
-        // Then
         assertNotNull(result);
         assertEquals(testResponse.getId(), result.getId());
         assertEquals(testResponse.getMerchantId(), result.getMerchantId());
@@ -112,7 +109,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendEmail_MerchantNotFound_ThrowsException() {
-        // Given
         Long merchantId = 999L;
         NotificationEmailRequest request = NotificationEmailRequest.builder()
                 .email("test@example.com")
@@ -121,7 +117,6 @@ public class NotificationServiceImplTest {
 
         when(merchantRepository.findById(merchantId)).thenReturn(Optional.empty());
 
-        // When & Then
         UsernameNotFoundException exception = assertThrows(
                 UsernameNotFoundException.class,
                 () -> notificationService.sendEmail(request, merchantId)
@@ -136,7 +131,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendEmail_VerifyMapperAndRepositoryCalls() {
-        // Given
         Long merchantId = 1L;
         NotificationEmailRequest request = NotificationEmailRequest.builder()
                 .email("user@example.com")
@@ -156,10 +150,8 @@ public class NotificationServiceImplTest {
         when(notificationRepository.save(emailNotification)).thenReturn(emailNotification);
         when(notificationMapper.toResponse(emailNotification)).thenReturn(testResponse);
 
-        // When
         notificationService.sendEmail(request, merchantId);
 
-        // Then
         verify(notificationMapper).toEmailNotification(request, testMerchant);
         verify(notificationRepository).save(emailNotification);
         verify(notificationMapper).toResponse(emailNotification);
@@ -167,7 +159,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendSms_Success() {
-        // Given
         Long merchantId = 1L;
         NotificationSmsRequest request = NotificationSmsRequest.builder()
                 .receiver("998901234567")
@@ -199,10 +190,8 @@ public class NotificationServiceImplTest {
         when(notificationRepository.save(any(NotificationEntity.class))).thenReturn(smsNotification);
         when(notificationMapper.toResponse(smsNotification)).thenReturn(smsResponse);
 
-        // When
         NotificationResponse result = notificationService.sendSms(request, merchantId);
 
-        // Then
         assertNotNull(result);
         assertEquals(smsResponse.getId(), result.getId());
         assertEquals(smsResponse.getMerchantId(), result.getMerchantId());
@@ -217,7 +206,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendSms_MerchantNotFound_ThrowsException() {
-        // Given
         Long merchantId = 999L;
         NotificationSmsRequest request = NotificationSmsRequest.builder()
                 .receiver("998901234567")
@@ -226,7 +214,6 @@ public class NotificationServiceImplTest {
 
         when(merchantRepository.findById(merchantId)).thenReturn(Optional.empty());
 
-        // When & Then
         UsernameNotFoundException exception = assertThrows(
                 UsernameNotFoundException.class,
                 () -> notificationService.sendSms(request, merchantId)
@@ -241,7 +228,6 @@ public class NotificationServiceImplTest {
 
     @Test
     void sendSms_VerifyMapperAndRepositoryCalls() {
-        // Given
         Long merchantId = 1L;
         NotificationSmsRequest request = NotificationSmsRequest.builder()
                 .receiver("998901234567")
@@ -261,10 +247,8 @@ public class NotificationServiceImplTest {
         when(notificationRepository.save(smsNotification)).thenReturn(smsNotification);
         when(notificationMapper.toResponse(smsNotification)).thenReturn(testResponse);
 
-        // When
         notificationService.sendSms(request, merchantId);
 
-        // Then
         verify(notificationMapper).toSmsNotification(request, testMerchant);
         verify(notificationRepository).save(smsNotification);
         verify(notificationMapper).toResponse(smsNotification);
