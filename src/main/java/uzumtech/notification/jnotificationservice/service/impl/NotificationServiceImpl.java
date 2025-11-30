@@ -60,7 +60,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .toSmsNotification(smsRequest, merchantEntity);
 
         notificationRepository.save(smsNotification);
-
         log.info("SMS notification sent | merchantId={} | phoneNumber={} | message='{}' | notificationId={}",
                 merchantId,
                 smsRequest.getReceiver(),

@@ -11,9 +11,9 @@ import uzumtech.notification.jnotificationservice.model.MerchantEntity;
 public interface MerchantMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "companyName", source = "companyName")
-    @Mapping(target = "password", ignore = true)
-    MerchantEntity toEntity(MerchantRequest request);
+    @Mapping(target = "companyName", source = "request.companyName")
+    @Mapping(target = "password", source = "password")
+    MerchantEntity toEntity(MerchantRequest request,String password);
 
     MerchantResponse toResponse(MerchantEntity entity);
 
