@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
@@ -12,6 +13,7 @@ import uzumtech.notification.jnotificationservice.mapper.MerchantMapper;
 import uzumtech.notification.jnotificationservice.model.MerchantEntity;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.service.MerchantService;
+import uzumtech.notification.jnotificationservice.utils.PasswordGenerator;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -24,14 +26,15 @@ public class MerchantServiceImpl implements MerchantService {
 
     MerchantRepository merchantRepository;
     MerchantMapper merchantMapper;
-    PasswordEncoder passwordEncoder;
+    PasswordGenerator passwordGenerator;
 
     @Override
     public MerchantResponse create(MerchantRequest request) {
         validateRequest(request);
 
-        MerchantEntity merchant = merchantMapper.toEntity(request);
-        merchant.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
+        String password = passwordGenerator.generatePassword();
+
+        MerchantEntity merchant = merchantMapper.toEntity(request,password);
         merchant = merchantRepository.save(merchant);
 
         log.info("Merchant created | merchantId={} | companyName={}",
