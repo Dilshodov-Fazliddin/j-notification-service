@@ -19,4 +19,3 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("email-notifications").partitions(3).replicas(1).build();
     }
 }
-// docker exec -it j-notification-service-kafka-1 kafka-topics --bootstrap-server localhost:9092 --list
