@@ -9,12 +9,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsRequest;
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
+import uzumtech.notification.jnotificationservice.kafka.producer.ProducerEmail;
+import uzumtech.notification.jnotificationservice.kafka.producer.ProducerSms;
 import uzumtech.notification.jnotificationservice.mapper.NotificationMapper;
 import uzumtech.notification.jnotificationservice.model.MerchantEntity;
 import uzumtech.notification.jnotificationservice.model.NotificationEntity;
+import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.repository.NotificationRepository;
 import uzumtech.notification.jnotificationservice.service.NotificationService;
@@ -28,7 +32,8 @@ public class NotificationServiceImpl implements NotificationService {
     NotificationRepository notificationRepository;
     MerchantRepository merchantRepository;
     NotificationMapper notificationMapper;
-
+    ProducerEmail producerEmail;
+    ProducerSms  producerSms;
 
     @Override
     @Transactional
@@ -41,6 +46,14 @@ public class NotificationServiceImpl implements NotificationService {
                 .toEmailNotification(notificationEmailRequest, merchantEntity);
 
         notificationRepository.save(emailNotification);
+
+        producerEmail.send(NotificationEvent.builder()
+                .notificationId(emailNotification.getId())
+                .content(emailNotification.getContent())
+                .recipient(emailNotification.getReceiver())
+                .notificationType(NotificationType.EMAIL)
+                .build());
+
         log.info("EMAIL notification sent | merchantId={} | phoneNumber={} | message='{}' | notificationId={}",
                 merchantId,
                 notificationEmailRequest.getEmail(),
@@ -60,6 +73,14 @@ public class NotificationServiceImpl implements NotificationService {
                 .toSmsNotification(smsRequest, merchantEntity);
 
         notificationRepository.save(smsNotification);
+
+        producerSms.send(NotificationEvent.builder()
+                .notificationId(smsNotification.getId())
+                .content(smsNotification.getContent())
+                .recipient(smsNotification.getReceiver())
+                .notificationType(NotificationType.SMS)
+                .build());
+
         log.info("SMS notification sent | merchantId={} | phoneNumber={} | message='{}' | notificationId={}",
                 merchantId,
                 smsRequest.getReceiver(),

@@ -15,6 +15,6 @@ public class MerchantDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return merchantRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return merchantRepository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }
