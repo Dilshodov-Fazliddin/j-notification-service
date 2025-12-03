@@ -18,7 +18,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    // FIXED: Consumer для SMS
+
     @Bean
     public ConsumerFactory<String, NotificationEvent> smsConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -27,8 +27,8 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, NotificationEvent.class); // FIXED
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "uzumtech.notification.jnotificationservice.dto"); // FIXED
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, NotificationEvent.class);
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "uzumtech.notification.jnotificationservice.dto");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
@@ -41,7 +41,6 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    // FIXED: Consumer для Email
     @Bean
     public ConsumerFactory<String, NotificationEvent> emailConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -50,8 +49,8 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, NotificationEvent.class); // FIXED
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "uzumtech.notification.jnotificationservice.dto"); // FIXED
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, NotificationEvent.class);
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "uzumtech.notification.jnotificationservice.dto");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
