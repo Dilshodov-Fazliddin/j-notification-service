@@ -19,6 +19,7 @@ import uzumtech.notification.jnotificationservice.mapper.NotificationMapper;
 import uzumtech.notification.jnotificationservice.model.MerchantEntity;
 import uzumtech.notification.jnotificationservice.model.NotificationEntity;
 import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
+import uzumtech.notification.jnotificationservice.model.enums.Status;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.repository.NotificationRepository;
 import uzumtech.notification.jnotificationservice.service.NotificationService;
@@ -88,5 +89,11 @@ public class NotificationServiceImpl implements NotificationService {
                 smsNotification.getId());
 
         return notificationMapper.toResponse(smsNotification);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Long notificationId, Status status) {
+        notificationRepository.updateStatusById(notificationId, status);
     }
 }

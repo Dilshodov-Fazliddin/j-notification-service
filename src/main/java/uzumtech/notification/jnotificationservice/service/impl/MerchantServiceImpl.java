@@ -1,5 +1,6 @@
 package uzumtech.notification.jnotificationservice.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,6 +30,7 @@ public class MerchantServiceImpl implements MerchantService {
     PasswordGenerator passwordGenerator;
 
     @Override
+    @Transactional
     public MerchantResponse create(MerchantRequest request) {
         validateRequest(request);
 
