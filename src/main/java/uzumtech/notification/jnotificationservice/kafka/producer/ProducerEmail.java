@@ -6,7 +6,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
-import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
 
 @Service
 @RequiredArgsConstructor
