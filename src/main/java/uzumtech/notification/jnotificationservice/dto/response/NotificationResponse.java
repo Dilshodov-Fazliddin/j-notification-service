@@ -2,32 +2,34 @@ package uzumtech.notification.jnotificationservice.dto.response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationResponse {
 
     @NotBlank(message = "id is blank")
-    private Long id;
+     Long id;
 
     @NotBlank(message = "merchant id is blank")
-    private Long merchantId;
+     Long merchantId;
 
     @NotBlank(message = "content is blank")
-    private String content;
+     String content;
 
     @NotBlank(message = "receiver is blank")
-    private String receiver;
+     String receiver;
 
     @NotBlank(message = "type is blank")
-    private String type;
+     String type;
 
     @NotBlank(message = "status is blank")
-    private String status;
+     String status;
 
     @NotBlank(message = "createdAt is blank")
-    private String createdAt;
+     String createdAt;
 }

@@ -1,4 +1,4 @@
-package uzumtech.notification.jnotificationservice.model;
+package uzumtech.notification.jnotificationservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

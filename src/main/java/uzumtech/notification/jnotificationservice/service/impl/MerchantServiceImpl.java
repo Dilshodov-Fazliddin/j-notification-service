@@ -1,23 +1,18 @@
 package uzumtech.notification.jnotificationservice.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
 import uzumtech.notification.jnotificationservice.dto.response.MerchantResponse;
 import uzumtech.notification.jnotificationservice.mapper.MerchantMapper;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.service.MerchantService;
 import uzumtech.notification.jnotificationservice.utils.PasswordGenerator;
-
-import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

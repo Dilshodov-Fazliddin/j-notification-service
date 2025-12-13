@@ -16,7 +16,6 @@ import uzumtech.notification.jnotificationservice.service.SmsService;
 public class SmsServiceImpl implements SmsService {
 
     @Override
-    @Transactional
     public void sendSms(NotificationEvent notificationEvent) {
         log.info("Sent sms to {} content {}", notificationEvent.recipient(),notificationEvent.content());
     }

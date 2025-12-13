@@ -22,7 +22,6 @@ public class EmailServiceImpl implements EmailService {
     MailConstant mailConstant;
 
     @Override
-    @Transactional
     public void sendEmail(NotificationEvent notificationEvent) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();

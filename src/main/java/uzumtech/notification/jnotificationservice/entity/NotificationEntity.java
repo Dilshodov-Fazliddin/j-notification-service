@@ -1,14 +1,13 @@
-package uzumtech.notification.jnotificationservice.model;
+package uzumtech.notification.jnotificationservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
-import uzumtech.notification.jnotificationservice.model.enums.Status;
+import uzumtech.notification.jnotificationservice.constant.enums.NotificationType;
+import uzumtech.notification.jnotificationservice.constant.enums.Status;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Entity
 @Getter
