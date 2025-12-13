@@ -1,7 +1,7 @@
 package uzumtech.notification.jnotificationservice.repository;
 
 import org.junit.jupiter.api.Test;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 
 import java.util.Optional;
 

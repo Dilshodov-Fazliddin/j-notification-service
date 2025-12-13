@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
 import uzumtech.notification.jnotificationservice.dto.response.MerchantResponse;
 import uzumtech.notification.jnotificationservice.mapper.MerchantMapper;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.service.impl.MerchantServiceImpl;
 import uzumtech.notification.jnotificationservice.utils.PasswordGenerator;

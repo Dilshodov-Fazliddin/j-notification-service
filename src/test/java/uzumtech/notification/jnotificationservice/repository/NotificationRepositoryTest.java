@@ -1,8 +1,7 @@
 package uzumtech.notification.jnotificationservice.repository;
 
 import org.junit.jupiter.api.Test;
-import uzumtech.notification.jnotificationservice.model.NotificationEntity;
-import uzumtech.notification.jnotificationservice.repository.NotificationRepository;
+import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
 
 import java.util.Optional;
 

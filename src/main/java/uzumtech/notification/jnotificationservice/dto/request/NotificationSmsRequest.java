@@ -3,22 +3,22 @@ package uzumtech.notification.jnotificationservice.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationSmsRequest {
 
     @NotBlank(message = "content is empty")
     @Size(max = 300)
-    private String content;
+    String content;
 
     @Pattern(regexp = "^998\\d{9}$")
     @NotBlank(message = "receiver is empty")
-    private String receiver;
+    String receiver;
 }

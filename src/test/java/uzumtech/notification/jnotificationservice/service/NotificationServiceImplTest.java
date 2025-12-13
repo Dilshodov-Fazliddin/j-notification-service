@@ -11,10 +11,10 @@ import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailR
 import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsRequest;
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
 import uzumtech.notification.jnotificationservice.mapper.NotificationMapper;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
-import uzumtech.notification.jnotificationservice.model.NotificationEntity;
-import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
-import uzumtech.notification.jnotificationservice.model.enums.Status;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
+import uzumtech.notification.jnotificationservice.constant.enums.NotificationType;
+import uzumtech.notification.jnotificationservice.constant.enums.Status;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.repository.NotificationRepository;
 import uzumtech.notification.jnotificationservice.service.impl.NotificationServiceImpl;

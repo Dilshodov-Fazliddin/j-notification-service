@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import uzumtech.notification.jnotificationservice.constant.enums.Status;
 import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
-import uzumtech.notification.jnotificationservice.model.enums.Status;
 import uzumtech.notification.jnotificationservice.service.EmailService;
 import uzumtech.notification.jnotificationservice.service.NotificationService;
 

@@ -1,22 +1,22 @@
 package uzumtech.notification.jnotificationservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class MerchantRequest{
     @NotBlank(message = "company name is blank")
-    private String companyName;
+    String companyName;
     @NotBlank(message = "tax number is blank")
-    private String taxNumber;
+    String taxNumber;
     @NotBlank(message = "login is blank")
-    private String login;
+    String login;
     @NotBlank(message = "webhook is blank")
-    private String webhook;
+    String webhook;
 }

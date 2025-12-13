@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
 import uzumtech.notification.jnotificationservice.dto.response.MerchantResponse;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

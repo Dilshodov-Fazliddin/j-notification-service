@@ -6,10 +6,10 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsRequest;
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
-import uzumtech.notification.jnotificationservice.model.MerchantEntity;
-import uzumtech.notification.jnotificationservice.model.NotificationEntity;
-import uzumtech.notification.jnotificationservice.model.enums.NotificationType;
-import uzumtech.notification.jnotificationservice.model.enums.Status;
+import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
+import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
+import uzumtech.notification.jnotificationservice.constant.enums.NotificationType;
+import uzumtech.notification.jnotificationservice.constant.enums.Status;
 
 @Mapper(
         componentModel = "spring",
