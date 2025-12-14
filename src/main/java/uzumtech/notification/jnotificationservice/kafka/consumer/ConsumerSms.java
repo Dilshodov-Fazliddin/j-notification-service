@@ -10,14 +10,17 @@ import uzumtech.notification.jnotificationservice.constant.enums.Status;
 import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
 import uzumtech.notification.jnotificationservice.service.NotificationService;
 import uzumtech.notification.jnotificationservice.service.SmsService;
+import uzumtech.notification.jnotificationservice.service.WebhookService;
 
 @Slf4j
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @RequiredArgsConstructor
 public class ConsumerSms {
+
     SmsService smsService;
     NotificationService notificationService;
+    WebhookService webhookService;
 
     @KafkaListener(
             topics = "sms-notifications",
@@ -27,10 +30,14 @@ public class ConsumerSms {
     public void receiveSms(NotificationEvent notificationEvent) {
         try {
             smsService.sendSms(notificationEvent);
-            log.info("Получили SMS: {}", notificationEvent.content());
+            notificationService.updateStatus(notificationEvent.notificationId(), Status.SENT);
+            webhookService.sendWebhook(notificationService.getNotificationById(notificationEvent.notificationId()));
+
+            log.info("SMS sent: {}", notificationEvent.recipient());
+
         }catch (Exception e){
             notificationService.updateStatus(notificationEvent.notificationId(), Status.FAILED);
-            log.error("Failed to send status notification to {}: {}", notificationEvent.content(), e.getMessage());
+            log.error("Failed to send status notification to {}: {}", notificationEvent.recipient(), e.getMessage());
         }
     }
 }
