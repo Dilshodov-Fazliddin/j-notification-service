@@ -14,6 +14,7 @@ import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationEmailRequest;
 import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsRequest;
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
+import uzumtech.notification.jnotificationservice.exception.DataNotFoundException;
 import uzumtech.notification.jnotificationservice.kafka.producer.ProducerEmail;
 import uzumtech.notification.jnotificationservice.kafka.producer.ProducerSms;
 import uzumtech.notification.jnotificationservice.mapper.NotificationMapper;
@@ -93,5 +94,11 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateStatus(Long notificationId, Status status) {
         notificationRepository.updateStatusById(notificationId, status);
+    }
+
+    @Override
+    public NotificationEntity getNotificationById(Long notificationId) {
+        return notificationRepository.findByIdWithMerchant(notificationId)
+                .orElseThrow(() -> new DataNotFoundException("User with id: " + notificationId + " not found"));
     }
 }
