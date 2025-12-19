@@ -40,6 +40,7 @@ public class MerchantServiceImplTest {
     private MerchantRequest testRequest;
     private MerchantEntity testEntity;
     private MerchantResponse testResponse;
+    private final String password = "12321414";
 
     @BeforeEach
     void setUp() {
@@ -68,6 +69,7 @@ public class MerchantServiceImplTest {
             .login("testlogin")
             .webhook("https://webhook.example.com")
             .build();
+
     }
 
     @Test
@@ -76,7 +78,7 @@ public class MerchantServiceImplTest {
 
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
         when(merchantRepository.existsByTaxNumber(testRequest.getTaxNumber())).thenReturn(false);
-        when(passwordGenerator.generatePassword()).thenReturn(encodedPassword);
+        when(passwordGenerator.generatePassword(password)).thenReturn(encodedPassword);
         doReturn(testEntity).when(merchantMapper).toEntity(any(MerchantRequest.class), anyString());
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
@@ -92,7 +94,7 @@ public class MerchantServiceImplTest {
 
         verify(merchantRepository, times(1)).existsByLogin(testRequest.getLogin());
         verify(merchantRepository, times(1)).existsByTaxNumber(testRequest.getTaxNumber());
-        verify(passwordGenerator, times(1)).generatePassword();
+        verify(passwordGenerator, times(1)).generatePassword(password);
         verify(merchantMapper, times(1)).toEntity(any(MerchantRequest.class), anyString());
         verify(merchantRepository, times(1)).save(any(MerchantEntity.class));
         verify(merchantMapper, times(1)).toResponse(testEntity);
@@ -110,7 +112,7 @@ public class MerchantServiceImplTest {
         assertEquals("Login already exists", exception.getMessage());
         verify(merchantRepository, times(1)).existsByLogin(testRequest.getLogin());
         verify(merchantRepository, never()).existsByTaxNumber(anyString());
-        verify(passwordGenerator, never()).generatePassword();
+        verify(passwordGenerator, never()).generatePassword(password);
         verify(merchantMapper, never()).toEntity(any(), anyString());
         verify(merchantRepository, never()).save(any());
     }
@@ -128,7 +130,7 @@ public class MerchantServiceImplTest {
         assertEquals("Tax number already exists", exception.getMessage());
         verify(merchantRepository, times(1)).existsByLogin(testRequest.getLogin());
         verify(merchantRepository, times(1)).existsByTaxNumber(testRequest.getTaxNumber());
-        verify(passwordGenerator, never()).generatePassword();
+        verify(passwordGenerator, never()).generatePassword(password);
         verify(merchantMapper, never()).toEntity(any(), anyString());
         verify(merchantRepository, never()).save(any());
     }
@@ -139,14 +141,14 @@ public class MerchantServiceImplTest {
 
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
         when(merchantRepository.existsByTaxNumber(testRequest.getTaxNumber())).thenReturn(false);
-        when(passwordGenerator.generatePassword()).thenReturn(encodedPassword);
+        when(passwordGenerator.generatePassword(password)).thenReturn(encodedPassword);
         doReturn(testEntity).when(merchantMapper).toEntity(any(MerchantRequest.class), anyString());
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
 
         merchantService.create(testRequest);
 
-        verify(passwordGenerator).generatePassword();
+        verify(passwordGenerator).generatePassword(password);
 
         ArgumentCaptor<String> passwordCaptor = ArgumentCaptor.forClass(String.class);
         verify(merchantMapper).toEntity(any(MerchantRequest.class), passwordCaptor.capture());
@@ -164,12 +166,11 @@ public class MerchantServiceImplTest {
 
     @Test
     void create_VerifyAllDependencyCalls() {
-        // Given
         String encodedPassword = "encoded_password";
 
         when(merchantRepository.existsByLogin(testRequest.getLogin())).thenReturn(false);
         when(merchantRepository.existsByTaxNumber(testRequest.getTaxNumber())).thenReturn(false);
-        when(passwordGenerator.generatePassword()).thenReturn(encodedPassword);
+        when(passwordGenerator.generatePassword(password)).thenReturn(encodedPassword);
         doReturn(testEntity).when(merchantMapper).toEntity(any(MerchantRequest.class), anyString());
         when(merchantRepository.save(any(MerchantEntity.class))).thenReturn(testEntity);
         when(merchantMapper.toResponse(testEntity)).thenReturn(testResponse);
@@ -180,7 +181,7 @@ public class MerchantServiceImplTest {
 
         verify(merchantRepository).existsByLogin(testRequest.getLogin());
         verify(merchantRepository).existsByTaxNumber(testRequest.getTaxNumber());
-        verify(passwordGenerator).generatePassword();
+        verify(passwordGenerator).generatePassword(password);
         verify(merchantMapper).toEntity(any(MerchantRequest.class), anyString());
         verify(merchantRepository).save(testEntity);
         verify(merchantMapper).toResponse(testEntity);

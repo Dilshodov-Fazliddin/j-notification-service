@@ -29,7 +29,7 @@ public class MerchantServiceImpl implements MerchantService {
     public MerchantResponse create(MerchantRequest request) {
         validateRequest(request);
 
-        String password = passwordGenerator.generatePassword();
+        String password = passwordGenerator.generatePassword(request.getPassword());
 
         MerchantEntity merchant = merchantMapper.toEntity(request,password);
         merchant = merchantRepository.save(merchant);

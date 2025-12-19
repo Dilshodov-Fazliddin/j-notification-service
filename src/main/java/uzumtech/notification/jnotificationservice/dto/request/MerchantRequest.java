@@ -19,4 +19,6 @@ public class MerchantRequest{
     String login;
     @NotBlank(message = "webhook is blank")
     String webhook;
+    @NotBlank(message = "merchant password is blank")
+    String password;
 }

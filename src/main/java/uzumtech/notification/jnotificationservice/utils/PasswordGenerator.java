@@ -14,7 +14,7 @@ public class PasswordGenerator {
 
     PasswordEncoder passwordEncoder;
 
-    public String generatePassword() {
-        return passwordEncoder.encode(UUID.randomUUID().toString());
+    public String generatePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
