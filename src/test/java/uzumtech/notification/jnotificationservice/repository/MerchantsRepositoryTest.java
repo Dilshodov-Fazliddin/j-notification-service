@@ -1,49 +1,51 @@
 package uzumtech.notification.jnotificationservice.repository;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest
 class MerchantsRepositoryTest {
 
-    private final MerchantRepository merchantRepository = mock( MerchantRepository.class );
+    @Autowired
+    private MerchantRepository merchantRepository;
 
     @Test
     void shouldRegisterMerchant() {
-        MerchantEntity merchant = mock( MerchantEntity.class );
+        MerchantEntity merchant = new MerchantEntity();
+        merchant.setLogin("login123");
 
-        when( merchantRepository.save( any() ) ).thenReturn( merchant );
+        MerchantEntity saved = merchantRepository.save(merchant);
 
-        MerchantEntity saved = merchantRepository.save( merchant );
-
-        assertNotNull( saved );
-        verify( merchantRepository ).save( merchant );
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Test
     void shouldFindByUsername() {
-        MerchantEntity merchant = mock( MerchantEntity.class );
+        MerchantEntity merchant = new MerchantEntity();
+        merchant.setLogin("login123");
+        merchantRepository.save(merchant);
 
-        when( merchantRepository.findByUsername( "user1" ) )
-                .thenReturn( Optional.of( merchant ) );
+        Optional<MerchantEntity> result =
+                merchantRepository.findByLogin("login123");
 
-        Optional<MerchantEntity> result = merchantRepository.findByUsername( "user1" );
-
-        assertTrue( result.isPresent() );
-        verify( merchantRepository ).findByUsername( "user1" );
+        assertThat(result).isPresent();
     }
 
     @Test
     void shouldCheckExistsByLogin() {
-        when( merchantRepository.existsByLogin( "login123" ) )
-                .thenReturn( true );
+        MerchantEntity merchant = new MerchantEntity();
+        merchant.setLogin("login123");
+        merchantRepository.save(merchant);
 
-        boolean exists = merchantRepository.existsByLogin( "login123" );
+        boolean exists =
+                merchantRepository.existsByLogin("login123");
 
-        assertTrue( exists );
-        verify( merchantRepository ).existsByLogin( "login123" );
+        assertThat(exists).isTrue();
     }
 }

@@ -15,7 +15,6 @@ import lombok.experimental.FieldDefaults;
 public class NotificationSmsRequest {
 
     @NotBlank(message = "content is empty")
-    @Size(max = 300)
     String content;
 
     @Pattern(regexp = "^998\\d{9}$")

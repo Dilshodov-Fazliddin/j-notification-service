@@ -1,8 +1,10 @@
 package uzumtech.notification.jnotificationservice.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,39 +12,60 @@ import static org.mockito.Mockito.*;
 
 class NotificationRepositoryTest {
 
-    @Test
-    void testSaveNotification() {
-        NotificationRepository repo = mock( NotificationRepository.class );
-        NotificationEntity notification = new NotificationEntity();
+    private NotificationRepository notificationRepository;
 
-        when( repo.save( notification ) ).thenReturn( notification );
-
-        NotificationEntity saved = repo.save( notification );
-
-        assertNotNull( saved );
-        verify( repo, times( 1 ) ).save( notification );
+    @BeforeEach
+    void setUp() {
+        notificationRepository = mock(NotificationRepository.class);
     }
 
     @Test
-    void testFindById() {
-        NotificationRepository repo = mock( NotificationRepository.class );
+    void shouldSaveNotification() {
         NotificationEntity notification = new NotificationEntity();
+        notification.setContent("Hello");
 
-        when(repo.findById(1)).thenReturn( Optional.of( notification ) );
+        when(notificationRepository.save(notification)).thenReturn(notification);
 
-        Optional<NotificationEntity> result = repo.findById( 1 );
+        NotificationEntity saved = notificationRepository.save(notification);
 
-        assertTrue( result.isPresent() );
-        assertEquals( notification, result.get() );
-        verify( repo, times( 1 ) ).findById( 1 );
+        assertNotNull(saved);
+        assertEquals("Hello", saved.getContent());
+        verify(notificationRepository, times(1)).save(notification);
     }
 
     @Test
-    void testDeleteById() {
-        NotificationRepository repo = mock( NotificationRepository.class );
+    void shouldFindNotificationById() {
+        NotificationEntity notification = new NotificationEntity();
+        notification.setContent("Find me");
 
-        repo.deleteById( 1 );
+        when(notificationRepository.findById(1l)).thenReturn(Optional.of(notification));
 
-        verify( repo, times( 1 ) ).deleteById( 1 );
+        Optional<NotificationEntity> result = notificationRepository.findById(1l);
+
+        assertTrue(result.isPresent());
+        assertEquals("Find me", result.get().getContent());
+        verify(notificationRepository, times(1)).findById(1l);
+    }
+
+    @Test
+    void shouldFindAllNotifications() {
+        NotificationEntity n1 = new NotificationEntity();
+        NotificationEntity n2 = new NotificationEntity();
+
+        when(notificationRepository.findAll()).thenReturn(List.of(n1, n2));
+
+        List<NotificationEntity> all = notificationRepository.findAll();
+
+        assertEquals(2, all.size());
+        verify(notificationRepository, times(1)).findAll();
+    }
+
+    @Test
+    void shouldDeleteNotificationById() {
+        doNothing().when(notificationRepository).deleteById(1l);
+
+        notificationRepository.deleteById(1l);
+
+        verify(notificationRepository, times(1)).deleteById(1l);
     }
 }
