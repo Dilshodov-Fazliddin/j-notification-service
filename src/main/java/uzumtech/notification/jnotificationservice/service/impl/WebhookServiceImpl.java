@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 import uzumtech.notification.jnotificationservice.dto.webhook.WebhookDto;
 import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
 import uzumtech.notification.jnotificationservice.service.WebhookService;
@@ -18,7 +18,7 @@ import uzumtech.notification.jnotificationservice.service.WebhookService;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WebhookServiceImpl implements WebhookService {
 
-    WebClient webClient;
+    RestClient restClient;
 
     @Override
     public void sendWebhook(NotificationEntity notification) {
@@ -31,12 +31,12 @@ public class WebhookServiceImpl implements WebhookService {
                 .receiver(notification.getReceiver())
                 .build();
         try {
-            webClient.post()
+            restClient.post()
                     .uri(webhook)
-                    .bodyValue(build)
+                    .body(build)
                     .retrieve()
-                    .toBodilessEntity()
-                    .block();
+                    .toBodilessEntity();
+
 
             log.info(
                     "WEBHOOK_SEND_SUCCESS notificationId={}",
