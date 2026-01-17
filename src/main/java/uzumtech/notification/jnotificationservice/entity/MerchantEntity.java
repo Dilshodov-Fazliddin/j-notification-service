@@ -2,6 +2,7 @@ package uzumtech.notification.jnotificationservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,33 +18,34 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class MerchantEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(nullable = false)
-    private String companyName;
+    String companyName;
 
     @Column(nullable = false)
-    private String webhook;
+    String webhook;
 
     @Column(nullable = false, unique = true)
-    private String taxNumber;
+    String taxNumber;
 
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @Column(nullable = false,unique = true)
-    private String login;
+    String login;
 
     @Column(nullable = false)
-    private String password;
+    String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
