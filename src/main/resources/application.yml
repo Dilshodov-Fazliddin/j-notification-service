@@ -2,13 +2,24 @@ spring:
   application:
     name: j-notification-service
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: *
+    password: *
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/notification_service
+    url: *
     username: postgres
     password: *
     driver-class-name: org.postgresql.Driver
-
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -27,11 +38,6 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        spring.json.add.type.headers: false
     consumer:
       group-id: notification-service
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -39,6 +45,11 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
         spring.json.use.type.headers: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
 
   flyway:
     baseline-on-migrate: true
@@ -46,7 +57,17 @@ spring:
     validate-on-migrate: true
     baseline-version: 0
     schemas: postgres
-
+    locations: classpath:db/migration
 
 server:
   port: 8085
+  tomcat:
+    accept-count: 100
+    max-connections: 1000
+    threads:
+      max: 200
+      min-spare: 10
+  compression:
+    enabled: true
+    min-response-size: 2KB
+    mime-types: application/json, application/xml, text/xml, text/plain
