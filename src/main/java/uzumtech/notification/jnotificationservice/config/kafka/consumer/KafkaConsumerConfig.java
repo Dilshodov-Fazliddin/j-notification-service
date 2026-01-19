@@ -1,4 +1,4 @@
-package uzumtech.notification.jnotificationservice.kafka.config;
+package uzumtech.notification.jnotificationservice.config.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

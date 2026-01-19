@@ -1,4 +1,4 @@
-package uzumtech.notification.jnotificationservice.kafka.config;
+package uzumtech.notification.jnotificationservice.config.kafka.producer;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

@@ -1,4 +1,4 @@
-package uzumtech.notification.jnotificationservice.kafka.config;
+package uzumtech.notification.jnotificationservice.config.kafka.topic;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
