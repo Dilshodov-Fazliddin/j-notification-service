@@ -14,8 +14,8 @@ import uzumtech.notification.jnotificationservice.dto.request.NotificationSmsReq
 import uzumtech.notification.jnotificationservice.dto.response.NotificationResponse;
 import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
 import uzumtech.notification.jnotificationservice.entity.NotificationEntity;
-import uzumtech.notification.jnotificationservice.kafka.producer.ProducerEmail;
-import uzumtech.notification.jnotificationservice.kafka.producer.ProducerSms;
+import uzumtech.notification.jnotificationservice.config.kafka.producer.ProducerEmail;
+import uzumtech.notification.jnotificationservice.config.kafka.producer.ProducerSms;
 import uzumtech.notification.jnotificationservice.mapper.NotificationMapper;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.repository.NotificationRepository;
