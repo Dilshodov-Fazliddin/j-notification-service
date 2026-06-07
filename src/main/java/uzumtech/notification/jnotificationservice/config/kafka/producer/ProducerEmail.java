@@ -9,7 +9,7 @@ import uzumtech.notification.jnotificationservice.dto.event.NotificationEvent;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal=true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ProducerEmail {
     KafkaTemplate<String, NotificationEvent> kafkaTemplate;
 

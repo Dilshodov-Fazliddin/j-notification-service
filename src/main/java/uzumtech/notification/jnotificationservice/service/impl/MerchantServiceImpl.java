@@ -4,15 +4,20 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uzumtech.notification.jnotificationservice.constant.enums.ErrorType;
 import uzumtech.notification.jnotificationservice.dto.request.MerchantRequest;
 import uzumtech.notification.jnotificationservice.dto.response.MerchantResponse;
-import uzumtech.notification.jnotificationservice.mapper.MerchantMapper;
 import uzumtech.notification.jnotificationservice.entity.MerchantEntity;
+import uzumtech.notification.jnotificationservice.exception.ApplicationException;
+import uzumtech.notification.jnotificationservice.mapper.MerchantMapper;
 import uzumtech.notification.jnotificationservice.repository.MerchantRepository;
 import uzumtech.notification.jnotificationservice.service.MerchantService;
 import uzumtech.notification.jnotificationservice.utils.PasswordGenerator;
+
+import static uzumtech.notification.jnotificationservice.constant.enums.Error.VALIDATION_ERROR_CODE;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +36,7 @@ public class MerchantServiceImpl implements MerchantService {
 
         String password = passwordGenerator.generatePassword(request.getPassword());
 
-        MerchantEntity merchant = merchantMapper.toEntity(request,password);
+        MerchantEntity merchant = merchantMapper.toEntity(request, password);
         merchant = merchantRepository.save(merchant);
 
         log.info("Merchant created | merchantId={} | companyName={}",
@@ -43,11 +48,21 @@ public class MerchantServiceImpl implements MerchantService {
 
     private void validateRequest(MerchantRequest request) {
         if (merchantRepository.existsByLogin(request.getLogin())) {
-            throw new RuntimeException("Login already exists");
+            throw new ApplicationException(
+                    VALIDATION_ERROR_CODE.getCode(),
+                    "Login already exists",
+                    ErrorType.VALIDATION,
+                    HttpStatus.CONFLICT
+            );
         }
 
         if (merchantRepository.existsByTaxNumber(request.getTaxNumber())) {
-            throw new RuntimeException("Tax number already exists");
+            throw new ApplicationException(
+                    VALIDATION_ERROR_CODE.getCode(),
+                    "Tax number already exists",
+                    ErrorType.VALIDATION,
+                    HttpStatus.CONFLICT
+            );
         }
     }
 }

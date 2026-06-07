@@ -1,6 +1,5 @@
 package uzumtech.notification.jnotificationservice.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -12,11 +11,11 @@ import uzumtech.notification.jnotificationservice.service.SmsService;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SmsServiceImpl implements SmsService {
 
     @Override
     public void sendSms(NotificationEvent notificationEvent) {
-        log.info("Sent sms to {} content {}", notificationEvent.recipient(),notificationEvent.content());
+        log.info("Sent sms to {} content {}", notificationEvent.recipient(), notificationEvent.content());
     }
 }

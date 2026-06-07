@@ -31,25 +31,34 @@ import static uzumtech.notification.jnotificationservice.constant.enums.ErrorTyp
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something is wrong:" + ex.getMessage());
-    }
-
     @ExceptionHandler(MerchantNotFoundException.class)
-    public ResponseEntity<String> handleMerchantNotFoundException(MerchantNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<ErrorDto> handleMerchantNotFoundException(MerchantNotFoundException ex) {
+        var error = ErrorDto.builder()
+                .type(INTERNAL)
+                .code(HANDLER_NOT_FOUND_ERROR_CODE.getCode())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(DataNotFoundException.class)
-    public ResponseEntity<String> handleDataNotFoundException(DataNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<ErrorDto> handleDataNotFoundException(DataNotFoundException ex) {
+        var error = ErrorDto.builder()
+                .type(INTERNAL)
+                .code(HANDLER_NOT_FOUND_ERROR_CODE.getCode())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-
     @ExceptionHandler(NotificationNotFoundException.class)
-    public ResponseEntity<String> handleNotificationNotFoundException(NotificationNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<ErrorDto> handleNotificationNotFoundException(NotificationNotFoundException ex) {
+        var error = ErrorDto.builder()
+                .type(INTERNAL)
+                .code(HANDLER_NOT_FOUND_ERROR_CODE.getCode())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(ApplicationException.class)
@@ -180,7 +189,15 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<Object> constraintViolationException(ConstraintViolationException ex) {
         log.error("ConstraintViolationException : {}", ex.getMessage(), ex);
 
-        var error = ErrorDto.builder().build();
+        var validationErrors = ex.getConstraintViolations().stream()
+                .map(v -> v.getPropertyPath() + ": " + v.getMessage())
+                .toList();
+
+        var error = ErrorDto.builder()
+                .type(VALIDATION)
+                .message(VALIDATION_ERROR_CODE.getMessage())
+                .validationErrors(validationErrors)
+                .build();
 
         return ResponseEntity.badRequest().body(error);
     }

@@ -18,7 +18,7 @@ import uzumtech.notification.jnotificationservice.service.impl.MerchantDetailsSe
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityConfiguration {
     MerchantDetailsService merchantDetailsService;
 
@@ -34,10 +34,10 @@ public class SecurityConfiguration {
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable)
                 .build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

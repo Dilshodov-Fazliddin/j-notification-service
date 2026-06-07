@@ -41,7 +41,7 @@ public class MerchantEntity implements UserDetails {
     @Column(nullable = false)
     LocalDateTime updatedAt;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     String login;
 
     @Column(nullable = false)

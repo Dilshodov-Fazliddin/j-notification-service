@@ -31,5 +31,10 @@ CREATE TABLE notification_entity
 ALTER TABLE merchant_entity
     ADD CONSTRAINT ukiwfoa8qdqf1d0ugijri1lv2o2 UNIQUE (tax_number);
 
+ALTER TABLE merchant_entity
+    ADD CONSTRAINT uk_merchant_login UNIQUE (login);
+
 ALTER TABLE notification_entity
     ADD CONSTRAINT fk_merchant FOREIGN KEY (merchant_id) REFERENCES merchant_entity (id) ON DELETE NO ACTION;
+
+CREATE INDEX idx_notification_merchant_id ON notification_entity (merchant_id);
